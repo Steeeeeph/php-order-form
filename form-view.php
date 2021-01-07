@@ -1,4 +1,8 @@
-<?php // This files is mostly containing things for your view / html ?>
+<?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+// This files is mostly containing things for your view / html ?>
 
 <!doctype html>
 <html lang="en">
@@ -64,6 +68,7 @@
 
       <fieldset>
          <legend>Products</legend>
+         <!-- // TODO implement theme selector -->
          <?php foreach ($products as $i => $product): ?>
                <label>
             <?php // <?p= is equal to <?php echo ?>
@@ -72,10 +77,14 @@
          <?php endforeach; ?>
       </fieldset>
 
-      <button type="submit" class="btn btn-primary">Order!</button>
+      <button type="submit" name="submit" class="btn btn-primary">Order!</button>
    </form>
 
-   <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+   <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in party material.</footer>
+   <p>
+      <?php echo $confirmation ?>
+   </p>
+   
 </div>
 
 <style>

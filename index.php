@@ -11,7 +11,6 @@ declare(strict_types=1);
 // We are going to use session variables so we need to enable sessions
 session_start();
 
-
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
    echo '<h2>$_GET</h2>';
@@ -24,35 +23,55 @@ function whatIsHappening() {
    var_dump($_SESSION);
 }
 // whatIsHappening();
-// TODO provide some products (you may overwrite the example)
-// TODO Add theme selector
-// TODO Add a selector for the amount of persons
+// provide some products (you may overwrite the example)
 $products = [
    ['name' => 'Room deco - Small pack', 'price' => 8],
    ['name' => 'Room deco - Medium pack', 'price' => 10],
    ['name' => 'Room deco - Large pack', 'price' => 12],
-   ['name' => 'Table deco - per person', 'price' => 3.5],
+   ['name' => 'Table deco (per person)', 'price' => 3.5],
 ];
+// echo "<pre>";
+// var_dump($products);
+// echo "</pre>";
 
 $totalValue = 0;
+$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping";
+$basket='';
 
-// if (isset($_POST['checkbox']){
-//    $totalValue = isset($products[price]);
-// }
-
+// TODO show selected items
 // TODO order confirmation after submit
 if (isset($_POST['submit'])) {
+
    $email = $_POST['email'];
    $street = $_POST['street'];
    $streetnumber = $_POST['streetnumber'];
    $city = $_POST['city'];
    $zipcode = $_POST['zipcode'];
-   // email to host
-   // $mailTo = "stephanie.vanbockhaven@hotmail.com"
-   // $headers = "From: ".$mail;
-   // $order = "You have received an e-mail from ".$name.".\n\n";
 
-   // mail($mailTo,...);
-   $confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping";
+   
+
+   if(!empty($_POST['products'])) {
+      foreach($_POST['products'] as $value){
+         echo "In basket: {$products[$value]['name']} <br/>";
+
+         switch ($products[$value]['name']) {
+            case $products[0]['name']:
+               $totalValue += $products[0]['price'];
+               break;
+            case $products[1]['name']:
+               $totalValue += $products[1]['price'];
+               break;
+            case $products[2]['name']:
+               $totalValue += $products[2]['price'];
+               break;        
+            case $products[3]['name']:
+               $totalValue += $products[3]['price'];
+               break;   
+         }
+      }
+  }
+
+
+
 }
 require 'form-view.php';

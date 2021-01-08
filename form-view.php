@@ -32,7 +32,7 @@ error_reporting(E_ALL);
       </ul>
    </nav>
    */ ?>
-   <form method="post">
+   <form method="post" >
       <div class="form-row">
          <div class="form-group col-md-6">
                <label for="email">E-mail:</label>
@@ -83,15 +83,15 @@ error_reporting(E_ALL);
       You already ordered <strong>&euro; <?= $totalValue ?></strong> in party material.
    </footer>
    <p>
-      <?= $confirmation ?>
+      <?= $confirmation.$address.$error ?>
    </p>
    
 </div>
-
 <style>
     footer {
         text-align: center;
     }
 </style>
+
 </body>
 </html>

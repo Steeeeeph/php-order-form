@@ -24,6 +24,8 @@ function whatIsHappening() {
 }
 // whatIsHappening();
 // provide some products (you may overwrite the example)
+// TODO form validation
+
 $products = [
    ['name' => 'Room deco - Small pack', 'price' => 8],
    ['name' => 'Room deco - Medium pack', 'price' => 10],
@@ -35,20 +37,17 @@ $products = [
 // echo "</pre>";
 
 $totalValue = 0;
-$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping";
-$basket='';
+$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping<br>";
+$basket=[];
 
 // TODO show selected items
 // TODO order confirmation after submit
 if (isset($_POST['submit'])) {
-
    $email = $_POST['email'];
    $street = $_POST['street'];
    $streetnumber = $_POST['streetnumber'];
    $city = $_POST['city'];
    $zipcode = $_POST['zipcode'];
-
-   
 
    if(!empty($_POST['products'])) {
       foreach($_POST['products'] as $value){
@@ -70,8 +69,11 @@ if (isset($_POST['submit'])) {
          }
       }
   }
-
-
+  if(!empty($street) && !empty($streetnumber) && !empty($zipcode) && !empty($city)){ //, $streetnumber, $zipcode, $city
+     $address = "Address: <br> $street $streetnumber <br> $zipcode $city";
+  } else {
+     $error= "ERROR";
+  }
 
 }
 require 'form-view.php';

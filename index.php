@@ -30,17 +30,17 @@ function whatIsHappening() {
 // TODO form validation
 
 $products = [
-   ['name' => 'Caring package', 'price' => 34.5],
-   ['name' => 'Horse toy', 'price' => 20],
-   ['name' => 'Saddle', 'price' => 120],
-   ['name' => 'Whip', 'price' => 8.5],
+   ['name' => 'Caring package', 'price' => 34.5, 'image' => "assets/Weaver-grooming-kit.jpeg"],
+   ['name' => 'Horse toy', 'price' => 20, 'image' => "assets/horsetoy_bigdees.jpeg"],
+   ['name' => 'Saddle', 'price' => 120, 'image' => "assets/saddle_decathlon.jpeg"],
+   ['name' => 'Whip', 'price' => 8.5, 'image' => "assets/horsewhip_decathlon.jpeg"],
 ];
 // echo "<pre>";
 // var_dump($products);
 // echo "</pre>";
 
 $totalValue = 0;
-$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping.<br>";
+$confirmation = "";
 $basket=[];
 // TODO field validation
 $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = $oops = "";
@@ -100,8 +100,8 @@ if (isset($_POST['submit'])) {
       foreach($_POST['products'] as $value){
          $basket[] = $products[$value]['name'];
          echo "<pre>";
-print_r($basket);
-echo "</pre>";
+         print_r($basket);
+         echo "</pre>";
          switch ($products[$value]['name']) {
             case $products[0]['name']:
                $totalValue += $products[0]['price'];
@@ -117,12 +117,18 @@ echo "</pre>";
                break;   
          }
       }
-  }
-  if(!empty($street) && !empty($streetnumber) && !empty($zipcode) && !empty($city)){ //, $streetnumber, $zipcode, $city
-     $address = "Shipping address: <br> $street $streetnumber <br> $zipcode $city";
-  } else {
-     $error= "ERROR";
-  }
+   }
+   if(!empty($street) && !empty($streetnumber) && !empty($zipcode) && !empty($city)){ //, $streetnumber, $zipcode, $city
+      $confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping.<br>"; 
+      $address = "Shipping address: <br> $street $streetnumber <br> $zipcode $city";
+   } else {
+      $error= "ERROR";
+   }
 
 }
 require 'form-view.php';
+
+// ALERTBOX
+function alertDisplay (){
+   
+}

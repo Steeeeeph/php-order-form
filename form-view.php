@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+/*
 header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -10,6 +10,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 clearstatcache();
+*/
 // This files is mostly containing things for your view / html ?>
 
 <!doctype html>
@@ -21,7 +22,7 @@ clearstatcache();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css"
           rel="stylesheet"/>
-          <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet"> 
    <link rel="stylesheet" href="style.css">
     <title>My little horsey</title>
@@ -43,15 +44,17 @@ clearstatcache();
       </ul>
    </nav>
    */ ?>
+
    <form method="post" >
+   <!-- //TODO insert required field box -->
+      <div class="" role="alert">
       <p>* required field</p>
-      <div class="alert alert-danger" role="alert">
          <?=  $emailErr;?>
       </div>
       <div class="form-row">
          <div class="form-group col-md-6">
                <label for="email">E-mail:</label> <span class="alertErr">* </span>
-               <input type="text" id="email" name="email" class="form-control"/>
+               <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" placeholder="name@example.com" required/>
          </div>
          <div></div>
       </div>
@@ -62,38 +65,41 @@ clearstatcache();
          <div class="form-row">
                <div class="form-group col-md-6">
                   <label for="street">Street:</label> <span class="alertErr">* <?=  $streetErr;?></span>
-                  <input type="text" name="street" id="street" class="form-control">
+                  <input type="text" name="street" id="street" class="form-control" value="<?php echo isset($_POST["street"]) ? $_POST["street"] : ''; ?>" required>
                </div>
                <div class="form-group col-md-6">
                   <label for="streetnumber">Street number:</label><span class="alertErr">* <?=  $streetnumberErr;?></span>
-                  <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                  <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo isset($_POST["streetnumber"]) ? $_POST["streetnumber"] : ''; ?>" required>
                </div>
          </div>
          <div class="form-row">
                <div class="form-group col-md-6">
                   <label for="city">City:</label><span class="alertErr">* <?=  $cityErr;?></span>
-                  <input type="text" id="city" name="city" class="form-control">
+                  <input type="text" id="city" name="city" class="form-control" value="<?php echo isset($_POST["city"]) ? $_POST["city"] : ''; ?>" required>
                </div>
                <div class="form-group col-md-6">
                   <label for="zipcode">Zipcode:</label><span class="alertErr">* <?=  $zipcodeErr;?></span>
-                  <input type="number" id="zipcode" name="zipcode" class="form-control">
+                  <input type="text" id="zipcode" name="zipcode" pattern="[0-9]{4}" size = "4" class="form-control" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : ''; ?>" required>
                </div>
          </div>
       </fieldset>
 
       <fieldset>
          <legend>Products</legend>
-         <?php foreach ($products as $i => $product): ?>
-               <label>
-                  <input type="checkbox" value=<?= $i ?> name="products[<?= $i ?>]"/> 
-                  <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
-               </label><br/>
-         <?php endforeach; ?>
+         <div class="form-row">
+            <?php foreach ($products as $i => $product): ?>
+                  <label class="form-group col-md-6-lg-3 mr-auto">
+                     <img src=<?="{$product['image']}"?> alt=""> <br>
+                     <input type="checkbox" value=<?= $i ?> name="products[<?= $i ?>]"/> 
+                     <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                  </label><br/>
+            <?php endforeach; ?>
+         </div>
 
       </fieldset>
       <button type="submit" name="submit" class="btn btn-primary">Order!</button>
    </form>
-
+<!-- //TODO insert ORDER INFO-->
    <footer> 
       You already ordered <strong>&euro; <?= $totalValue ?></strong> in horse-tastic material.
    </footer>

@@ -1,6 +1,9 @@
 <?php
 // This line makes PHP behave in a more strict way
+
 declare(strict_types=1);
+
+
 
 
 // This file is your starting point (= since it's the index)
@@ -27,18 +30,62 @@ function whatIsHappening() {
 // TODO form validation
 
 $products = [
-   ['name' => 'Room deco - Small pack', 'price' => 8],
-   ['name' => 'Room deco - Medium pack', 'price' => 10],
-   ['name' => 'Room deco - Large pack', 'price' => 12],
-   ['name' => 'Table deco (per person)', 'price' => 3.5],
+   ['name' => 'Caring package', 'price' => 34.5],
+   ['name' => 'Horse toy', 'price' => 20],
+   ['name' => 'Saddle', 'price' => 120],
+   ['name' => 'Whip', 'price' => 8.5],
 ];
 // echo "<pre>";
 // var_dump($products);
 // echo "</pre>";
 
 $totalValue = 0;
-$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping<br>";
+$confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping.<br>";
 $basket=[];
+// TODO field validation
+$emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = $oops = "";
+$email = $street = $streetnumber = $city = $zipcode = "";
+
+function test_input($data) {
+   $data = trim($data);
+   $data = stripslashes($data);
+   $data = htmlspecialchars($data);
+   return $data;
+ }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   if (empty($_POST["email"])) {
+      $oops = "Oops!";
+      $emailErr = "E-mail is required";
+   } else {
+      $email = test_input($_POST["email"]);
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+         $emailErr = "Invalid email format";
+       }
+   }
+   if (empty($_POST["street"])) {
+      $streetErr = "Street is required";
+   } else {
+      $street = test_input($_POST["street"]);
+   }
+   if (empty($_POST["streetnumber"])) {
+      $streetnumberErr = "Street number is required";
+   } else {
+      $streetnumber = test_input($_POST["streetnumber"]);
+   }
+   if (empty($_POST["city"])) {
+      $cityErr = "City is required";
+   } else {
+   $city = test_input($_POST["city"]);
+   }
+   if (empty($_POST["zipcode"])) {
+      $zipcodeErr = "Zipcode is required";
+   } else {
+      $zipcode = test_input($_POST["zipcode"]);
+   }
+
+}
+
 
 // TODO show selected items
 // TODO order confirmation after submit
@@ -51,8 +98,10 @@ if (isset($_POST['submit'])) {
 
    if(!empty($_POST['products'])) {
       foreach($_POST['products'] as $value){
-         echo "In basket: {$products[$value]['name']} <br/>";
-
+         $basket[] = $products[$value]['name'];
+         echo "<pre>";
+print_r($basket);
+echo "</pre>";
          switch ($products[$value]['name']) {
             case $products[0]['name']:
                $totalValue += $products[0]['price'];
@@ -70,7 +119,7 @@ if (isset($_POST['submit'])) {
       }
   }
   if(!empty($street) && !empty($streetnumber) && !empty($zipcode) && !empty($city)){ //, $streetnumber, $zipcode, $city
-     $address = "Address: <br> $street $streetnumber <br> $zipcode $city";
+     $address = "Shipping address: <br> $street $streetnumber <br> $zipcode $city";
   } else {
      $error= "ERROR";
   }

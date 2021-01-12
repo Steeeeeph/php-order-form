@@ -55,13 +55,12 @@ function test_input($data) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["email"])) {
-      $oops = "Oops!";
       $emailErr = "E-mail is required";
    } else {
       $email = test_input($_POST["email"]);
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-         $emailErr = "Invalid email format";
-       }
+      // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      //    $emailErr = "Invalid email format";
+      //  } SOLVED IN HTML
    }
    if (empty($_POST["street"])) {
       $streetErr = "Street is required";
@@ -76,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["city"])) {
       $cityErr = "City is required";
    } else {
-   $city = test_input($_POST["city"]);
+      $city = test_input($_POST["city"]);
    }
    if (empty($_POST["zipcode"])) {
       $zipcodeErr = "Zipcode is required";
@@ -99,9 +98,9 @@ if (isset($_POST['submit'])) {
    if(!empty($_POST['products'])) {
       foreach($_POST['products'] as $value){
          $basket[] = $products[$value]['name'];
-         echo "<pre>";
-         print_r($basket);
-         echo "</pre>";
+         // echo "<pre>";
+         // print_r($basket);
+         // echo "</pre>";
          switch ($products[$value]['name']) {
             case $products[0]['name']:
                $totalValue += $products[0]['price'];
@@ -118,6 +117,8 @@ if (isset($_POST['submit'])) {
          }
       }
    }
+
+   
    if(!empty($street) && !empty($streetnumber) && !empty($zipcode) && !empty($city)){ //, $streetnumber, $zipcode, $city
       $confirmation = "Thanks for ordering, we'll send an e-mail with the link to the status of your order-shipping.<br>"; 
       $address = "Shipping address: <br> $street $streetnumber <br> $zipcode $city";
@@ -129,6 +130,15 @@ if (isset($_POST['submit'])) {
 require 'form-view.php';
 
 // ALERTBOX
-function alertDisplay (){
-   
+/*
+      $oops = "Oops!";
+
+
+function alertDisplay ($input_value, $name_value){
+   if (empty($_POST["$name_value"])) {
+      $error_message = "$name_value is required";
+   } else {
+      $zipcode = test_input($_POST["zipcode"]);
+   }
 }
+*/

@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 /*
 header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -28,9 +29,13 @@ clearstatcache();
     <title>My little horsey</title>
 </head>
 <body>
-<h1>My little horsey <br> <span>"All things you need for your horses" </span> </h1>
+   <div id="banner">
+      <h1>My little horsey </h1>
+      <h2>"All things you need for your horses" </h2> 
+   </div>
+
 <div class="container">
-   <h2>Place your order</h2>
+   <h3>Place your order</h3>
    <?php // Navigation for when you need it ?>
    <?php /*
    <nav>
@@ -47,14 +52,14 @@ clearstatcache();
 
    <form method="post" >
    <!-- //TODO insert required field box -->
-      <div class="" role="alert">
+      <div class= <?="$alert_box"?> role="alert">
       <p>* required field</p>
          <?=  $emailErr;?>
       </div>
       <div class="form-row">
          <div class="form-group col-md-6">
                <label for="email">E-mail:</label> <span class="alertErr">* </span>
-               <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" placeholder="name@example.com" required/>
+               <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" placeholder="name@example.com" required/>  <!-- (isset($_SESSION["email"]) ? $_SESSION("email"):'') -->
          </div>
          <div></div>
       </div>
@@ -104,7 +109,7 @@ clearstatcache();
       You already ordered <strong>&euro; <?= $totalValue ?></strong> in horse-tastic material.
    </footer>
    <p>
-      <?= "Your ordered items:<br>".implode("<br>",$basket)."<br><br>".$confirmation.$address.$error ?>
+      <?= "Your ordered items:<br>".implode("<br>",$basket)."<br><br>".$confirmation.$address.$error ?> <!-- // Bert-session: foreach with list items -->
    </p>
    
 </div>

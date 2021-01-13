@@ -1,18 +1,13 @@
 <?php
 // This line makes PHP behave in a more strict way
-
 declare(strict_types=1);
-
-
-
 
 // This file is your starting point (= since it's the index)
 // It will contain most of the logic, to prevent making a messy mix in the html
-
-
-
 // We are going to use session variables so we need to enable sessions
 session_start();
+
+require 'classes/Products.php';
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -28,16 +23,22 @@ function whatIsHappening() {
 // whatIsHappening();
 // provide some products (you may overwrite the example)
 // TODO form validation
+// $products = [
+//    ['name' => 'Grooming set', 'price' => 34.5, 'image' => "assets/Weaver-grooming-kit.jpeg"],
+//    ['name' => 'Horse toy', 'price' => 20, 'image' => "assets/horsetoy_bigdees.jpeg"],
+//    ['name' => 'Saddle', 'price' => 120, 'image' => "assets/saddle_decathlon.jpeg"],
+//    ['name' => 'Whip', 'price' => 8.5, 'image' => "assets/horsewhip_decathlon.jpeg"],
+// ];
 
-$products = [
-   ['name' => 'Caring package', 'price' => 34.5, 'image' => "assets/Weaver-grooming-kit.jpeg"],
-   ['name' => 'Horse toy', 'price' => 20, 'image' => "assets/horsetoy_bigdees.jpeg"],
-   ['name' => 'Saddle', 'price' => 120, 'image' => "assets/saddle_decathlon.jpeg"],
-   ['name' => 'Whip', 'price' => 8.5, 'image' => "assets/horsewhip_decathlon.jpeg"],
-];
-// echo "<pre>";
-// var_dump($products);
-// echo "</pre>";
+$products[] = new Products("Grooming set", 34.5, "assets/Weaver-grooming-kit.jpeg");
+$products[] = new Products("Saddle", 120, "assets/saddle_decathlon.jpeg");
+$products[] = new Products("Whip", 8.5, "assets/horsewhip_decathlon.jpeg");
+$products[] = new Products("Horse toy", 20, "assets/horsetoy_bigdees.jpeg");
+
+echo "<pre>";
+var_dump($products);
+var_dump($products[0]->name);
+echo "</pre>";
 
 $totalValue = 0;
 $confirmation = "";

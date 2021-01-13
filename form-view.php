@@ -84,7 +84,7 @@ clearstatcache();
                </div>
                <div class="form-group col-md-6">
                   <label for="zipcode">Zipcode:</label><span class="alertErr">* <?=  $zipcodeErr;?></span>
-                  <input type="text" id="zipcode" name="zipcode" pattern="[0-9]{4}" size = "4" class="form-control" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : ''; ?>" required>
+                  <input type="text" id="zipcode" name="zipcode" pattern="[1-9][0-9]{4}" size = "4" class="form-control" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : ''; ?>" required>
                </div>
          </div>
       </fieldset>
@@ -92,11 +92,11 @@ clearstatcache();
       <fieldset>
          <legend>Products</legend>
          <div class="form-row">
-            <?php foreach ($products as $i => $product): ?>
+            <?php foreach ($products as $i=>$product):?> 
                   <label class="form-group col-md-6-lg-3 mr-auto">
-                     <img src=<?="{$product['image']}"?> alt=""> <br>
-                     <input type="checkbox" value=<?= $i ?> name="products[<?= $i ?>]"/> 
-                     <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                     <img src=<?="{$product->image}"?> alt=""> <br>
+                     <input type="checkbox" value=1 name="products[<?= $i?>]"/> 
+                     <?= $product->name ?> - &euro; <?= number_format($product->price, 2) ?>
                   </label><br/>
             <?php endforeach; ?>
          </div>

@@ -21,28 +21,22 @@ function whatIsHappening() {
    var_dump($_SESSION);
 }
 // whatIsHappening();
-// provide some products (you may overwrite the example)
-// TODO form validation
-// $products = [
-//    ['name' => 'Grooming set', 'price' => 34.5, 'image' => "assets/Weaver-grooming-kit.jpeg"],
-//    ['name' => 'Horse toy', 'price' => 20, 'image' => "assets/horsetoy_bigdees.jpeg"],
-//    ['name' => 'Saddle', 'price' => 120, 'image' => "assets/saddle_decathlon.jpeg"],
-//    ['name' => 'Whip', 'price' => 8.5, 'image' => "assets/horsewhip_decathlon.jpeg"],
-// ];
 
+// if (isset($_GET["material"]) === 1) {
 $products[] = new Products("Grooming set", 34.5, "assets/Weaver-grooming-kit.jpeg");
 $products[] = new Products("Saddle", 120, "assets/saddle_decathlon.jpeg");
 $products[] = new Products("Whip", 8.5, "assets/horsewhip_decathlon.jpeg");
 $products[] = new Products("Horse toy", 20, "assets/horsetoy_bigdees.jpeg");
-
-echo "<pre>";
-var_dump($products);
-var_dump($products[0]->name);
-echo "</pre>";
-
+// }
+// if (isset($_GET["horses"]) === 1) {
+//    $products[] = new Products("Grooming set", 34.5, "assets/Weaver-grooming-kit.jpeg");
+//    $products[] = new Products("Saddle", 120, "assets/saddle_decathlon.jpeg");
+//    $products[] = new Products("Whip", 8.5, "assets/horsewhip_decathlon.jpeg");
+//    $products[] = new Products("Horse toy", 20, "assets/horsetoy_bigdees.jpeg");
+// }
 $totalValue = 0;
 $confirmation = "";
-$basket=[];
+// $basket=[];
 // TODO field validation
 $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr = $oops = "";
 $email = $street = $streetnumber = $city = $zipcode = "";
@@ -91,29 +85,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // TODO order confirmation after submit
 if (isset($_POST['submit'])) {
    $email = $_POST['email'];
+   $_SESSION['email'] = $email;
    $street = $_POST['street'];
+   $_SESSION['street'] = $street;
    $streetnumber = $_POST['streetnumber'];
+   $_SESSION['streetnumber'] = $streetnumber;
    $city = $_POST['city'];
+   $_SESSION['city'] = $city;
    $zipcode = $_POST['zipcode'];
+   $_SESSION['zipcode'] = $zipcode;
 
    if(!empty($_POST['products'])) {
       foreach($_POST['products'] as $value){
-         $basket[] = $products[$value]['name'];
-         // echo "<pre>";
-         // print_r($basket);
-         // echo "</pre>";
-         switch ($products[$value]['name']) {
-            case $products[0]['name']:
-               $totalValue += $products[0]['price'];
+         $basket[] = $products[$value]->name;
+
+         switch ($products[$value]->name) {
+            case $products[0]->name:
+               $totalValue += $products[0]->price;
                break;
-            case $products[1]['name']:
-               $totalValue += $products[1]['price'];
+            case $products[1]->name:
+               $totalValue += $products[1]->price;
                break;
-            case $products[2]['name']:
-               $totalValue += $products[2]['price'];
+            case $products[2]->name:
+               $totalValue += $products[2]->price;
                break;        
-            case $products[3]['name']:
-               $totalValue += $products[3]['price'];
+            case $products[3]->name:
+               $totalValue += $products[3]->price;
                break;   
          }
       }

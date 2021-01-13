@@ -37,18 +37,16 @@ clearstatcache();
 <div class="container">
    <h3>Place your order</h3>
    <?php // Navigation for when you need it ?>
-   <?php /*
    <nav>
       <ul class="nav">
          <li class="nav-item">
-               <a class="nav-link active" href="?food=1">Order food</a>
+               <a class="nav-link active" href="?material=1">Order materials</a>
          </li>
          <li class="nav-item">
-               <a class="nav-link" href="?food=0">Order drinks</a>
+               <a class="nav-link" href="?horses=0">Order horses</a>
          </li>
       </ul>
    </nav>
-   */ ?>
 
    <form method="post" >
    <!-- //TODO insert required field box -->
@@ -59,7 +57,7 @@ clearstatcache();
       <div class="form-row">
          <div class="form-group col-md-6">
                <label for="email">E-mail:</label> <span class="alertErr">* </span>
-               <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" placeholder="name@example.com" required/>  <!-- (isset($_SESSION["email"]) ? $_SESSION("email"):'') -->
+               <input type="email" id="email" name="email" class="form-control" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : (isset($_SESSION["email"]) ? $_SESSION("email"):'') ; ?>" placeholder="name@example.com" required/>  <!-- (isset($_SESSION["email"]) ? $_SESSION("email"):'') -->
          </div>
          <div></div>
       </div>
@@ -70,21 +68,21 @@ clearstatcache();
          <div class="form-row">
                <div class="form-group col-md-6">
                   <label for="street">Street:</label> <span class="alertErr">* <?=  $streetErr;?></span>
-                  <input type="text" name="street" id="street" class="form-control" value="<?php echo isset($_POST["street"]) ? $_POST["street"] : ''; ?>" required>
+                  <input type="text" name="street" id="street" class="form-control" value="<?php echo isset($_POST["street"]) ? $_POST["street"] : (isset($_SESSION["street"]) ? $_SESSION("street"):''); ?>" required>
                </div>
                <div class="form-group col-md-6">
                   <label for="streetnumber">Street number:</label><span class="alertErr">* <?=  $streetnumberErr;?></span>
-                  <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo isset($_POST["streetnumber"]) ? $_POST["streetnumber"] : ''; ?>" required>
+                  <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo isset($_POST["streetnumber"]) ? $_POST["streetnumber"] : (isset($_SESSION["streetnumber"]) ? $_SESSION("streetnumber"):''); ?>" required>
                </div>
          </div>
          <div class="form-row">
                <div class="form-group col-md-6">
                   <label for="city">City:</label><span class="alertErr">* <?=  $cityErr;?></span>
-                  <input type="text" id="city" name="city" class="form-control" value="<?php echo isset($_POST["city"]) ? $_POST["city"] : ''; ?>" required>
+                  <input type="text" id="city" name="city" class="form-control" value="<?php echo isset($_POST["city"]) ? $_POST["city"] : (isset($_SESSION["city"]) ? $_SESSION("city"):''); ?>" required>
                </div>
                <div class="form-group col-md-6">
                   <label for="zipcode">Zipcode:</label><span class="alertErr">* <?=  $zipcodeErr;?></span>
-                  <input type="text" id="zipcode" name="zipcode" pattern="[1-9][0-9]{4}" size = "4" class="form-control" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : ''; ?>" required>
+                  <input type="text" id="zipcode" name="zipcode" pattern="[0-9]{4}" size = "4" class="form-control" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : (isset($_SESSION["zipcode"]) ? $_SESSION("zipcode"):''); ?>" required>
                </div>
          </div>
       </fieldset>
@@ -95,8 +93,8 @@ clearstatcache();
             <?php foreach ($products as $i=>$product):?> 
                   <label class="form-group col-md-6-lg-3 mr-auto">
                      <img src=<?="{$product->image}"?> alt=""> <br>
-                     <input type="checkbox" value=1 name="products[<?= $i?>]"/> 
-                     <?= $product->name ?> - &euro; <?= number_format($product->price, 2) ?>
+                     <input type="checkbox" value="<?= $i?>" name="products[<?= $i?>]"/> 
+                     <?= $product->name ?> - &euro; <?= $product->formatNumber($product->price); ?>
                   </label><br/>
             <?php endforeach; ?>
          </div>
@@ -109,7 +107,7 @@ clearstatcache();
       You already ordered <strong>&euro; <?= $totalValue ?></strong> in horse-tastic material.
    </footer>
    <p>
-      <?= "Your ordered items:<br>".implode("<br>",$basket)."<br><br>".$confirmation.$address.$error ?> <!-- // Bert-session: foreach with list items -->
+      <?= "Your ordered items:<br>".implode("<br>",$basket)."<br><br>".$confirmation.$address ?> <!-- // Bert-session: foreach with list items -->
    </p>
    
 </div>
